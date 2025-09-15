@@ -500,6 +500,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                             <option value="كاش">كاش</option>
                                             <option value="تحويل بنكي">تحويل بنكي</option>
                                             <option value="بطاقة ائتمان">بطاقة ائتمان</option>
+                                            <option value="لا يوجد "> لم يسدد</option>
                                         </select>
                                     </div>
                                 </div>

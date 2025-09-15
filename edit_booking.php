@@ -251,6 +251,9 @@ $selected_rooms = !empty($booking['selected_rooms']) ? explode(',', $booking['se
                         <select name="payment_method" id="payment_method" class="form-control" onchange="togglePaymentFields()" required>
                             <option value="كاش" <?php echo $booking['payment_method'] === 'كاش' ? 'selected' : ''; ?>>كاش</option>
                             <option value="تحويل بنكي" <?php echo $booking['payment_method'] === 'تحويل بنكي' ? 'selected' : ''; ?>>تحويل بنكي</option>
+                            <option value="تحويل بنكي" <?php echo
+                            $booking['payment_method'] === 'لا يوجد ' ?
+                            'selected' : ''; ?>>لم يسدد </option>
                         </select>
                     </div>
                     
