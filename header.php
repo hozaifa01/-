@@ -41,6 +41,7 @@ if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
   <script src="bootstrap.min.js"></script>
   <script src="bootstrap.bundle.min.js"></script>
   <script src="popper.min.js"></script>
+  <script src="qrcode.min.js"></script>
   <!-- تفعيل الوضع المظلم -->
   <script>
     $(document).ready(function () {

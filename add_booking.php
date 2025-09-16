@@ -287,79 +287,84 @@ document.addEventListener('DOMContentLoaded', function() {
         return diff > 0 ? diff : 0;
     }
 
-    // تحديث المبلغ الإجمالي
-    function updateAmount() {
-        const selectedRoomCheckboxes = document.querySelectorAll('.room-checkbox:checked');
-        const selectedRoomIds = Array.from(selectedRoomCheckboxes).map(cb => cb.value);
+        // الوظيفة الرئيسية لحساب المبلغ - تدعم اختيار غرف متعددة
+        function updateAmount() {
+            let selectedRoomCheckboxes = document.querySelectorAll('.room-checkbox:checked');
+            let selectedRoomIds = Array.from(selectedRoomCheckboxes).map(cb => cb.value);
 
-        const check_in_str = checkInInput.value;
-        const check_out_str = checkOutInput.value;
-        const tax_percent = parseFloat(document.querySelector('input[name="tax"]').value) || 0;
-        const discount_percent = parseFloat(document.querySelector('input[name="discount"]').value) || 0;
+            let check_in_str = document.querySelector('input[name="check_in"]').value;
+            let check_out_str = document.querySelector('input[name="check_out"]').value;
+            let tax_percent = parseFloat(document.querySelector('input[name="tax"]').value) || 0;
+            let discount_percent = parseFloat(document.querySelector('input[name="discount"]').value) || 0;
 
-        // التحقق من التواريخ
-        if (!check_in_str || !check_out_str) {
-            totalDisplay.innerText = '0.00';
-            amountInput.value = 0;
-            return;
-        }
+            let check_in = new Date(check_in_str);
+            let check_out = new Date(check_out_str);
 
-        const check_in = new Date(check_in_str);
-        const check_out = new Date(check_out_str);
-
-        if (check_out <= check_in) {
-            totalDisplay.innerText = '0.00';
-            amountInput.value = 0;
-            return;
-        }
-
-        const days = calculateHotelNights(check_in, check_out);
-
-        if (selectedRoomIds.length === 0) {
-            totalDisplay.innerText = '0.00';
-            amountInput.value = 0;
-            return;
-        }
-
-        // عرض رسالة مؤقتة أثناء الحساب
-        totalDisplay.innerText = 'جارٍ الحساب...';
-
-        // إرسال الطلب إلى السيرفر لجلب السعر الإجمالي للغرف
-        const xhr = new XMLHttpRequest();
-        xhr.open('POST', 'get_total_room_price.php', true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.onload = function() {
-            if (this.status === 200) {
-                try {
-                    const response = JSON.parse(this.responseText);
-                    const total_base_price_per_night = parseFloat(response.total_price) || 0;
-
-                    let subtotal = total_base_price_per_night * days;
-                    let tax_amount = subtotal * (tax_percent / 100);
-                    let discount_amount = subtotal * (discount_percent / 100);
-                    let final_amount = subtotal + tax_amount - discount_amount;
-
-                    // تحديث الـ span و الـ input المخفي
-                    totalDisplay.innerText = final_amount.toFixed(2);
-                    amountInput.value = final_amount.toFixed(2);
-                } catch (e) {
-                    console.error("Error parsing JSON:", e, this.responseText);
-                    totalDisplay.innerText = '0.00';
-                    amountInput.value = 0;
-                }
+            // حساب عدد الأيام
+            let days = 0;
+            if (check_in_str && check_out_str && check_out > check_in) {
+                days = (check_out.getTime() - check_in.getTime()) / (1000 * 3600 * 24);
             } else {
-                console.error("AJAX error:", this.status);
-                totalDisplay.innerText = '0.00';
-                amountInput.value = 0;
+                document.querySelector('input[name="amount"]').value = (0).toFixed(2);
+                return; // الخروج إذا كانت التواريخ غير صالحة أو لم يتم تحديدها
             }
-        };
 
-        // تجهيز البيانات للإرسال
-        let data = `check_in=${encodeURIComponent(check_in_str)}&check_out=${encodeURIComponent(check_out_str)}`;
-        selectedRoomIds.forEach(id => data += `&room_ids[]=${encodeURIComponent(id)}`);
-        xhr.send(data);
-    }
+            if (selectedRoomIds.length > 0) {
+                let xhr = new XMLHttpRequest();
+                xhr.open('POST', 'get_total_room_price.php', true);
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                xhr.onload = function () {
+                    if (this.status == 200) {
+                        try {
+                            let response = JSON.parse(this.responseText);
+                            let total_base_price_per_night = parseFloat(response.total_price);
 
+                            let subtotal = total_base_price_per_night * days;
+                            let tax_amount = subtotal * (tax_percent / 100);
+                            let discount_amount = subtotal * (discount_percent / 100);
+                            let final_amount = subtotal + tax_amount - discount_amount;
+
+                            document.querySelector('input[name="amount"]').value = final_amount.toFixed(2);
+
+                        } catch (e) {
+                            console.error("Error parsing JSON response or response is not a number:", e, this.responseText);
+                            document.querySelector('input[name="amount"]').value = (0).toFixed(2);
+                        }
+                    } else {
+                        console.error("AJAX error: " + this.status);
+                        document.querySelector('input[name="amount"]').value = (0).toFixed(2);
+                    }
+                };
+
+                // إعداد البيانات لإرسالها عبر POST مع مصفوفة معرفات الغرف
+                let data = 'check_in=' + check_in_str + '&check_out=' + check_out_str;
+                selectedRoomIds.forEach(function(roomId) {
+                    data += '&room_ids[]=' + roomId; // إرسال معرفات الغرف كمصفوفة
+                });
+                xhr.send(data);
+            } else {
+                // لا توجد غرف مختارة، تعيين المبلغ إلى 0
+                document.querySelector('input[name="amount"]').value = (0).toFixed(2);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function(){
+            // إضافة مستمعين للأحداث لجميع مربعات اختيار الغرف
+            document.querySelectorAll('.room-checkbox').forEach(function (checkbox) {
+                checkbox.addEventListener('change', updateAmount);
+            });
+            document.querySelector('input[name="check_in"]').addEventListener('change', updateAmount);
+            document.querySelector('input[name="check_out"]').addEventListener('change', updateAmount);
+            document.querySelector('input[name="tax"]').addEventListener('change', updateAmount);
+            document.querySelector('input[name="discount"]').addEventListener('change', updateAmount);
+            document.querySelector('select[name="payment_method"]').addEventListener('change', updateAmount);
+            
+            // حساب أولي للمبلغ عند تحميل الصفحة
+            updateAmount();
+            
+            // عرض/إخفاء معلومات البنك بناءً على طريقة الدفع المحددة
+            togglePaymentFields();
+        });
     // تفعيل/إلغاء تمييز الغرفة عند التحديد
     function toggleRoomSelection(checkbox) {
         const roomCard = checkbox.closest('.room-card');
@@ -500,7 +505,8 @@ document.addEventListener('DOMContentLoaded', function() {
                                             <option value="كاش">كاش</option>
                                             <option value="تحويل بنكي">تحويل بنكي</option>
                                             <option value="بطاقة ائتمان">بطاقة ائتمان</option>
-                                            <option value="لا يوجد "> لم يسدد</option>
+                                            <option value="تحصيل">تحت
+                                            التحصيل</option>
                                         </select>
                                     </div>
                                 </div>

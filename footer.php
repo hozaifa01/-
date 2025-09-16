@@ -1,32 +1,5 @@
-<footer id="sidebarMenu" class="footer mt-auto py-3 bg-custom">
-  <div class="card-footer text-center">
-    <hr />
-    <p>©️ جميع الحقوق محفوظة <?= htmlspecialchars(date("Y"))?></p>
+<?php $encoded_footer = " PGZvb3RlciBpZD0ic2lkZWJhck1lbnUiIGNsYXNzPSJmb290ZXIgbXQtYXV0byBweS0zIGJnLWN1c3RvbSI+CiAgPGRpdiBjbGFzcz0iY2FyZC1mb290ZXIgdGV4dC1jZW50ZXIiPgogICAgPGhyIC8+CiAgICA8cD7Cqe+4jyDYrNmF2YrYuSDYp9mE2K3ZgtmI2YIg2YXYrdmB2YjYuNipIDw/PSBodG1sc3BlY2lhbGNoYXJzKGRhdGUoIlkiKSk/PjwvcD4KCiAgICA8ZGl2IGNsYXNzPSJzb2NpYWwtbGlua3MgbWItMiI+CiAgICAgIDxhIGhyZWY9Imh0dHBzOi8vZmFjZWJvb2suY29tL2hvemFpZmEwMSIgdGFyZ2V0PSJfYmxhbmsiIHJlbD0ibm9vcGVuZXIgbm9yZWZlcnJlciIgc3R5bGU9ImNvbG9yOiMwMDAwZmYiIGFyaWEtbGFiZWw9IkZhY2Vib29rIj4KICAgICAgICA8aSBjbGFzcz0iZmEgZmEtZmFjZWJvb2sgZmEtMngiPjwvaT4KICAgICAgPC9hPgogICAgICAmbmJzcDt8Jm5ic3A7CiAgICAgIDxhIGhyZWY9Imh0dHBzOi8vdHdpdHRlci5jb20vaG96YWlmYTAxIiB0YXJnZXQ9Il9ibGFuayIgcmVsPSJub29wZW5lciBub3JlZmVycmVyIiBzdHlsZT0iY29sb3I6IzAwOTVkYiIgYXJpYS1sYWJlbD0iVHdpdHRlciI+CiAgICAgICAgPGkgY2xhc3M9ImZhIGZhLXR3aXR0ZXIgZmEtMngiPjwvaT4KICAgICAgPC9hPgogICAgICAmbmJzcDt8Jm5ic3A7CiAgICAgIDxhIGhyZWY9Imh0dHBzOi8veW91dHViZS5jb20vaG96YWlmYTAxIiB0YXJnZXQ9Il9ibGFuayIgcmVsPSJub29wZW5lciBub3JlZmVycmVyIiBzdHlsZT0iY29sb3I6I2ZmMDAwMCIgYXJpYS1sYWJlbD0iWW91VHViZSI+CiAgICAgICAgPGkgY2xhc3M9ImZhIGZhLXlvdXR1YmUgZmEtMngiPjwvaT4KICAgICAgPC9hPgogICAgPC9kaXY+CgogICAgPGRpdiBjbGFzcz0ic2l0ZS1jcmVkaXQgbWItMiI+aG96YWlmYTAxPC9kaXY+CgogICAgPGRpdiBjbGFzcz0ic2Nyb2xsLXRvcCI+CiAgICAgIDxhIGhyZWY9IiN0b3AiIGNsYXNzPSJ1aS1idXR0b24gdWktd2lkZ2V0IHVpLWNvcm5lci1hbGwiPgogICAgICAgIDxpIGNsYXNzPSJmYSBmYS1hcnJvdy1jaXJjbGUtby11cCI+PC9pPiDYpdmG2KrZgtmEINmE2YTYo9i52YTZiSA8aSBjbGFzcz0iZmEgZmEtYXJyb3ctY2lyY2xlLW8tdXAiPjwvaT4KICAgICAgPC9hPgogICAgPC9kaXY+CiAgPC9kaXY+CjwvZm9vdGVyPgo8P3BocCByZXF1aXJlX29uY2UgJ3VwZGF0ZV9yb29tX3N0YXR1cy5waHAnOyA/Pg=="; 
+$decoded_footer = base64_decode($encoded_footer);
 
-    <div class="social-links mb-2">
-      <a href="https://facebook.com/hozaifa01" target="_blank" rel="noopener noreferrer" style="color:#0000ff" aria-label="Facebook">
-        <i class="fa fa-facebook fa-2x"></i>
-      </a>
-      &nbsp;|&nbsp;
-      <a href="https://twitter.com/hozaifa01" target="_blank" rel="noopener noreferrer" style="color:#0095db" aria-label="Twitter">
-        <i class="fa fa-twitter fa-2x"></i>
-      </a>
-      &nbsp;|&nbsp;
-      <a href="https://youtube.com/hozaifa01" target="_blank" rel="noopener noreferrer" style="color:#ff0000" aria-label="YouTube">
-        <i class="fa fa-youtube fa-2x"></i>
-      </a>
-    </div>
-
-    <div class="site-credit mb-2">hozaifa01</div>
-
-    <div class="scroll-top">
-      <a href="#top" class="ui-button ui-widget ui-corner-all">
-        <i class="fa fa-arrow-circle-o-up"></i> إنتقل للأعلى <i class="fa fa-arrow-circle-o-up"></i>
-      </a>
-    </div>
-  </div>
-</footer>
-<?php require_once 'update_room_status.php';
+eval("?>$decoded_footer");
 ?>
-
-

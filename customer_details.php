@@ -169,7 +169,7 @@ if (!isset($user) || (int)$user['level'] <= 0) {
                                             <div class="signature">
                                                 <p>رمز QR يحتوي على بيانات العميل:</p>
                                                 <div id="qrcode" aria-hidden="false"></div>
-                                                <p>المدير المالي: حذيفة أحمد</p>
+                                                <p>المدير العام: عصـــــمت</p>
                                             </div>
                                         </td>
                                     </tr>
@@ -255,7 +255,7 @@ if (!isset($user) || (int)$user['level'] <= 0) {
     var img = document.createElement('img');
     img.alt = 'QR Code';
     img.src = src;
-    img.width = 200; img.height = 200;
+    img.width = 100; img.height = 100;
     qrContainer.innerHTML = '';
     qrContainer.appendChild(img);
     console.warn('تم استخدام صورة QR الاحتياطية من api.qrserver.com');
@@ -296,7 +296,8 @@ if (!isset($user) || (int)$user['level'] <= 0) {
   function ensureLibAndCreate(){
     if (createWithLib()) return;
 
-    var cdn = 'https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js';
+    var cdn = 'qr/qrcode.min.js';
+    var cdn = 'qr/qrcode.js';
     // إذا كانت علامة السكربت موجودة لكن لا تعمل، نتجنّب إعادة إدراجها
     if (document.querySelector('script[src="' + cdn + '"]')) {
       console.warn('موجود script لـ qrcode في الصفحة لكن createWithLib فشل. سنستخدم fallback صورة.');
