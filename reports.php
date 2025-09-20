@@ -8,7 +8,6 @@ if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
 session_start(['cookie_httponly' => true, 'cookie_secure' => isset($_SERVER['HTTPS']), 'use_strict_mode' => true]);
 
 require_once 'dbconnection.php';
-header('Content-Type: charset=utf-8');
 // التحقق من الجلسة
 if (!isset($_SESSION['aid']) || !filter_var($_SESSION['aid'], FILTER_VALIDATE_INT)) {
     header('Location: logout.php');

@@ -2,7 +2,6 @@
 session_start();
 $current_page = basename($_SERVER['PHP_SELF']);
 require_once 'dbconnection.php';
-require_once 'update_room_status.php';
 if (!isset($_SESSION['aid']) ||!filter_var($_SESSION['aid'], FILTER_VALIDATE_INT)) {
   header('Location: logout.php');
   exit();
@@ -25,10 +24,10 @@ $photo =!empty($row['photo'])? htmlspecialchars($row['photo'], ENT_QUOTES, 'UTF-
 ?>
     <!-- زر إظهار/إخفاء القائمة -->
     <button class="btn btn-outline-custom ms-auto" id="toggleSidebarBtn" type="button">
-      <i class="fa fa-hand-o-right"></i>
+      <i class="bi bi-arrow-right-circle"></i>
     </button>
  <button class="ui-button ui-widget ui-corner-all" id="theme-toggler" title="تبديل شكل التصميم">
-      <i class="fa fa-adjust"></i>
+      <i class="bi bi-circle-half"></i>
     </button>
 
 
@@ -68,21 +67,20 @@ if (!isset($user) || (int)$user['level'] <= 0) {
 
   <ul class="nav flex-column fs-5">
     <li class="nav-item mb-2">
-      <a href="index.php" class="nav-link"><i class="fa fa-home me-2"></i> الشاشة الرئيسية</a></li>
+      <a href="index.php" class="nav-link"><i class="bi bi-house me-2"></i> الشاشة الرئيسية</a></li>
     <li class="nav-item mb-2"><?php if (isset($user) && (int)$user['level'] === 99):?>
   <a class="nav-link" href="bookings_admin.php">
-        <i class="fa fa-user-secret"></i> لوحة الحجز (مدير)
+        <i class="bi bi-person-gear me-2"></i> لوحة الحجز (مدير)
     </a>
 <?php else:?>
     <a class="nav-link" href="bookings.php">
-        <i class="fa fa-user"></i> لوحة الحجز (عضو)
+        <i class="bi bi-person me-2"></i> لوحة الحجز (عضو)
     </a>
 <?php endif;?></a></li>
-    <li class="nav-item mb-2"><a href="rooms.php" class="nav-link"><i class="fa
-      fa-bed me-2"></i> إدارة الغرف</a></li>
-    <li class="nav-item mb-2"><a href="reports.php" class="nav-link"><i class="fa fa-bar-chart me-2"></i> التقارير</a></li>
-    <li class="nav-item mb-2"><a href="manage_users.php" class="nav-link"><i class="fa fa-users me-2"></i> إدارة المستخدمين</a></li>
-    <li class="nav-item mb-2"><a href="site.php" class="nav-link"><i class="fa fa-cogs me-2"></i> الإعدادات</a></li>
+    <li class="nav-item mb-2"><a href="rooms.php" class="nav-link"><i class="bi bi-door-closed me-2"></i> إدارة الغرف</a></li>
+    <li class="nav-item mb-2"><a href="reports.php" class="nav-link"><i class="bi bi-bar-chart me-2"></i> التقارير</a></li>
+    <li class="nav-item mb-2"><a href="manage_users.php" class="nav-link"><i class="bi bi-people me-2"></i> إدارة المستخدمين</a></li>
+    <li class="nav-item mb-2"><a href="site.php" class="nav-link"><i class="bi bi-gear me-2"></i> الإعدادات</a></li>
   </ul>
 
   <div class="dropdown mt-3">
@@ -91,10 +89,10 @@ if (!isset($user) || (int)$user['level'] <= 0) {
       <strong><?= htmlspecialchars($_SESSION['login'], ENT_QUOTES, 'UTF-8') ?></strong>
     </a>
     <ul class="dropdown-menu text-small shadow">
-      <li><a class="dropdown-item" href="profile.php">الملف الشخصي</a></li>
-      <li><a class="dropdown-item" href="#">الإعدادات</a></li>
+      <li><a class="dropdown-item" href="profile.php"><i class="bi bi-person me-2"></i>الملف الشخصي</a></li>
+      <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i>الإعدادات</a></li>
       <li><hr class="dropdown-divider"></li>
-      <li><a class="dropdown-item" href="logout.php">تسجيل خروج</a></li>
+      <li><a class="dropdown-item" href="logout.php"><i class="bi bi-box-arrow-right me-2"></i>تسجيل خروج</a></li>
     </ul>
   </div>
 
@@ -107,13 +105,13 @@ $(document).ready(function () {
   const sidebarHidden = localStorage.getItem("sidebarHidden") === "true";
   if (sidebarHidden) {
     $("body").addClass("sidebar-hidden");
-    $("#toggleSidebarBtn i").removeClass("fa-hand-o-right").addClass("fa-hand-o-left");
+    $("#toggleSidebarBtn i").removeClass("bi-arrow-right-circle").addClass("bi-arrow-left-circle");
 }
 
   // استعادة السمة من التخزين المحلي
   if (localStorage.getItem("theme") === "dark") {
     $("body").addClass("dark-theme");
-    $("#theme-toggler i").removeClass("fa-adjust").addClass("fa-sun");
+    $("#theme-toggler i").removeClass("bi-circle-half").addClass("bi-sun");
 }
 
   // تبديل السمة
@@ -124,9 +122,9 @@ $(document).ready(function () {
 
     const icon = $(this).find("i");
     if (isDark) {
-      icon.removeClass("fa-adjust").addClass("fa-sun");
+      icon.removeClass("bi-circle-half").addClass("bi-sun");
 } else {
-      icon.removeClass("fa-sun").addClass("fa-adjust");
+      icon.removeClass("bi-sun").addClass("bi-circle-half");
 }
 });
 
@@ -143,9 +141,9 @@ $(document).ready(function () {
 
     const icon = $(this).find("i");
     if (isHidden) {
-      icon.removeClass("fa-hand-o-right").addClass("fa-hand-o-left");
+      icon.removeClass("bi-arrow-right-circle").addClass("bi-arrow-left-circle");
 } else {
-      icon.removeClass("fa-hand-o-left").addClass("fa-hand-o-right");
+      icon.removeClass("bi-arrow-left-circle").addClass("bi-arrow-right-circle");
 }
 });
 
@@ -155,7 +153,7 @@ $(document).ready(function () {
       if (!$(e.target).closest("#sidebarMenu, #toggleSidebarBtn").length &&
 !$("body").hasClass("sidebar-hidden")) {
         $("body").addClass("sidebar-hidden");
-        $("#toggleSidebarBtn i").removeClass("fa-hand-o-right").addClass("fa-hand-o-left");
+        $("#toggleSidebarBtn i").removeClass("bi-arrow-right-circle").addClass("bi-arrow-left-circle");
         localStorage.setItem("sidebarHidden", true);
 }
 }

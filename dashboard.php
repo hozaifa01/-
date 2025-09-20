@@ -256,7 +256,7 @@ $totalusers     = getRowCount($con, "SELECT id FROM tbl_login");
             <div class="d-flex justify-content-between align-items-center">
                 <div class="d-flex align-items-center">
                     <div class="alert-icon">
-                        <i class="fa fa-clock"></i>
+                        <i class="bi bi-clock"></i>
                     </div>
                     <div>
                         <div class="alert-title">تنبيه هام: توقيت الفندق يبدأ وينتهي عند الساعة 12 ظهرًا</div>
@@ -265,7 +265,7 @@ $totalusers     = getRowCount($con, "SELECT id FROM tbl_login");
                     </div>
                 </div>
                 <button class="close-btn" id="closeAlert">
-                    <i class="fa fa-times"></i>
+                    <i class="bi bi-x"></i>
                 </button>
             </div>
         </div>

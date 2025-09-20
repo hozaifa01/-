@@ -21,11 +21,6 @@ $stmt->execute();
 $result = $stmt->get_result();
 $user = $result->fetch_assoc();
 $stmt->close();
-if (!isset($user) || (int)$user['level'] <= 0) {
-    echo '<script>alert("عفوا، لا تملك صلاحيات كافية")</script>';
-    echo "<script>window.location.href='index.php'</script>";
-    exit();
-}
 // تفعيل تسجيل الأخطاء وتعطيل عرضها للمستخدم
 ini_set('display_errors', 0);
 ini_set('log_errors', 1);

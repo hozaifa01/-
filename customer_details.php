@@ -329,7 +329,21 @@ if (!isset($user) || (int)$user['level'] <= 0) {
 
 })();
 </script>
-
+<script>
+function printTable() {
+    const tableContent = document.getElementById("invoiceTable").outerHTML;
+    const printWindow = window.open('', '', 'width=800,height=600');
+    printWindow.document.write('<html><head><title>فاتورة</title>');
+    printWindow.document.write('<style>*{direction:rtl; text-align:right;} table {width: 100%; border-collapse: collapse;} th, td {border:none; padding: 8px; text-align: right;}</style>');
+    printWindow.document.write('</head><body>');
+    printWindow.document.write(tableContent);
+    printWindow.document.write('</body></html>');
+    printWindow.document.close();
+    printWindow.focus();
+    printWindow.print();
+    printWindow.close();
+}
+</script>
 <?php include "footer.php"; ?>
 </body>
 </html>

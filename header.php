@@ -19,8 +19,9 @@ if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
   <!-- أيقونة الموقع -->
   <link rel="icon" href="a49.png">
   <link rel="shortcut icon" href="a49.png">
-
+  
   <!-- ملفات CSS -->
+   <link rel="stylesheet" href="dist/bootstrap-icons-1.11.0/bootstrap-icons.min.css">
   <link rel="stylesheet" href="dist/Font-Awesome/CSS/font-awesome.min.css">
   <link rel="stylesheet" href="datatables.min.css">
   <link rel="stylesheet" href="datatables.css">
@@ -158,4 +159,16 @@ gulp.task('watch', function() {
 // المهمة الافتراضية
 gulp.task('default', gulp.parallel('scripts', 'styles'));
     </script>
-    
+    <script>
+        $(document).ready(function() {
+            // تأثيرات الواجهة
+            $('.card').hover(
+                function() {
+                    $(this).css('transform', 'translateY(-5px)');
+                },
+                function() {
+                    $(this).css('transform', 'translateY(0)');
+                }
+            );
+        });
+    </script>
